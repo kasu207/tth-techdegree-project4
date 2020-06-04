@@ -8,7 +8,7 @@ startButton.addEventListener('click', () => {
 });
 
 const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('click', (e) => game.handleInteraction(e)));
+keys.forEach(key => key.addEventListener('click', (e) => game.handleInteraction(e.target)));
 
 /*check if game is completed
 - if so remove all li elements from phrase element
