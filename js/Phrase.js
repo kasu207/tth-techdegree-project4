@@ -30,13 +30,12 @@
           const letterLi = document.createElement('li');
           letterLi.innerHTML = splitPhrase[i];
           phraseDiv.appendChild(letterLi);
-          letterLi.setAttribute('class', splitPhrase[i]);
           letterLi.setAttribute('id', splitPhrase[i]);
-
+          letterLi.setAttribute('class', splitPhrase[i]);
           if(this.phrase[i] == ' '){
-            letterLi.setAttribute('class', 'space');
+            letterLi.className = 'space';
           }else if(this.phrase[i] == splitPhrase[i]){
-            letterLi.setAttribute('class', 'hide letter');
+            letterLi.className +=  ' hide letter';
           }
         }
     }
@@ -45,15 +44,20 @@
       * checks to see if the letter selected by the player matches a letter in the phrase.
      */
     checkLetter(letter){
-      //get user input
-      //check if input is in phrase
       const splitPhrase = this.phrase.split('');
       if(splitPhrase.includes(letter)){
         return true
+      }else{
+        return false;
       }
     }
-    showMatchedLetter(){
-
+    showMatchedLetter(letter){
+      const showLetter = document.querySelectorAll('.key');
+      for (let i = 0; i < showLetter.length; i++){
+        if(showLetter[i].textContent == letter){
+          letterLi.setAttribute('class', 'show');
+        }
+      }
     }
 
   }

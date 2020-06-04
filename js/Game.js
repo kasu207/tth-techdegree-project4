@@ -30,12 +30,12 @@ class Game{
     }
     handleInteraction(key){
             key.disabled = true;
-            if (this.activePhrase.checkLetter(key) == false){
+            if (this.activePhrase.checkLetter(key.textContent) == false){
                 key.setAttribute('class','wrong');
                 this.removeLife();
-            } else {
-                key.setAttribute('class','choosen');
-                this.activePhrase.showMatchedLetter();
+            } else if ((this.activePhrase.checkLetter(key.textContent))) {
+                key.setAttribute('class','chosen');
+                this.activePhrase.showMatchedLetter(key.textContent);
                 this.checkForWin();
                 this.gameOver();
             }
