@@ -10,9 +10,7 @@
   ** addPhraseToDisplay()
   *** adds placeholdrs to the display, when the game starts, regarding to word
 
-  ** checkLetter()
-  *** checks to see if the letter selected by the player matches a letter in the phrase.
-  
+
   ** showMatchedLetter()
   *** reveals the letter on the board that match 
   *** select DOM elements that have a CSS class that
@@ -24,14 +22,35 @@
     constructor(phrase){
         this.phrase = phrase.toLowerCase();
     }
-    addPhraseToDisplay(phrase){
+    addPhraseToDisplay(){
         const phraseDiv = document.querySelector('#phrase ul');
-        const letterLi = document.createElement('li');
-        //for each Letter in phrase add 
-        phrase.forEach(letter => { console.log( letter )} )
-    }
-    checkLetter(){
+        const splitPhrase = this.phrase.split('');
+        console.log(this.phrase);
+        for(let i = 0; i < this.phrase.length; i++){
+          const letterLi = document.createElement('li');
+          letterLi.innerHTML = splitPhrase[i];
+          phraseDiv.appendChild(letterLi);
+          letterLi.setAttribute('class', splitPhrase[i]);
+          letterLi.setAttribute('id', splitPhrase[i]);
 
+          if(this.phrase[i] == ' '){
+            letterLi.setAttribute('class', 'space');
+          }else if(this.phrase[i] == splitPhrase[i]){
+            letterLi.setAttribute('class', 'hide letter');
+          }
+        }
+    }
+    /**
+     *checkLetter()
+      * checks to see if the letter selected by the player matches a letter in the phrase.
+     */
+    checkLetter(letter){
+      //get user input
+      //check if input is in phrase
+      const splitPhrase = this.phrase.split('');
+      if(splitPhrase.includes(letter)){
+        return true
+      }
     }
     showMatchedLetter(){
 

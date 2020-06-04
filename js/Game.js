@@ -16,32 +16,31 @@ class Game{
     
     startGame() {
         //hides start screen overlay
-        const phrases = this.phrases;
-        this.activePhrase = this.getRandomPhrase(phrases);
-        console.log(this.activePhrase);
-        phrases.addPhraseToDisplay(this.activePhrase);
+        const overlay = document.querySelector('#overlay');
+        overlay.style.display = 'none';
+        console.log(overlay);
+        this.activePhrase = this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
     }
 
     
-    getRandomPhrase(phrases) {
-        const randomPhrase = phrases[Math.floor(Math.random()*phrases.length)];
-        return randomPhrase.phrase;
+    getRandomPhrase() {
+        const randomPhrase = Math.floor(Math.random()*this.phrases.length);
+        return this.phrases[randomPhrase];
     }
-    handleInteraction(){
-        //disable the selected letters onscreen keyboard button
-        //if clicked letter is not in phrase
-            /* 
-            - add ClassName wrong
-            - removeLife();
-            */
-        //if clicked Letter in in Phrase
-        /*
-         - add CSS className chosen
-         - showMatchedLetter()
-         - checkForWin()
-         - gameOver() 
-         */
-    }
+    handleInteraction(key){
+            key.disabled = true;
+            if (this.phrases.checkLetter(key) == false){
+                key.setAttribute('class','wrong');
+                this.removeLife();
+            } else {
+                key.setAttribute('class','choosen');
+                this.phrases.showMatchedLetter();
+                this.checkForWin();
+                this.gameOver();
+            }
+        };
+    
     removeLife(){
         //img replacement
         // missed +1

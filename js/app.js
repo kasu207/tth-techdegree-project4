@@ -1,12 +1,14 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * app.js */
-const game = new Game();
 const startButton = document.querySelector('#btn__reset');
-startButton.addEventListener('click', () => game.startGame());
+const game = new Game();
+startButton.addEventListener('click', () => {
+    game.startGame();
+});
 
 const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('click', () => this.handleInteraction()));
+keys.forEach(key => key.addEventListener('click', (e) => game.handleInteraction(e)));
 
 /*check if game is completed
 - if so remove all li elements from phrase element
