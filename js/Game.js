@@ -18,7 +18,6 @@ class Game{
         //hides start screen overlay
         const overlay = document.querySelector('#overlay');
         overlay.style.display = 'none';
-        console.log(overlay);
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
     }
@@ -43,6 +42,7 @@ class Game{
     
     removeLife(){
         //img replacement
+        const liveHeart = 
         // missed +1
         //gameOver()
     }

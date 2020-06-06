@@ -52,12 +52,11 @@
       }
     }
     showMatchedLetter(letter){
-      const showLetter = document.querySelectorAll('.key');
+      console.log(letter);
+      const showLetter = document.querySelectorAll('.' + letter);
       for (let i = 0; i < showLetter.length; i++){
-        if(showLetter[i].textContent == letter){
-          letterLi.setAttribute('class', 'show');
+          showLetter[i].setAttribute('class', 'show');
         }
-      }
     }
 
   }
