@@ -17,9 +17,17 @@ class Game{
     startGame() {
         //hides start screen overlay
         const overlay = document.querySelector('#overlay');
-        overlay.style.display = 'none';
-        this.activePhrase = this.getRandomPhrase();
-        this.activePhrase.addPhraseToDisplay();
+        const phraseLi = document.querySelector('#phrase ul');
+        if(phraseLi.hasChildNodes()){
+            overlay.style.display = 'none';
+            for(let i = 0; i < phraseLi.length; i++){
+                phraseLi.removeChild(phraseLi.childNodes[0]);
+            };
+        }else{
+            overlay.style.display = 'none';
+            this.activePhrase = this.getRandomPhrase();
+            this.activePhrase.addPhraseToDisplay();
+        }
     }
 
     
@@ -35,27 +43,43 @@ class Game{
             } else if ((this.activePhrase.checkLetter(key.textContent))) {
                 key.setAttribute('class','chosen');
                 this.activePhrase.showMatchedLetter(key.textContent);
-                this.checkForWin();
-                this.gameOver();
+                if(this.checkForWin() === true){
+                    this.gameOver();
+                };          
             }
         };
     
     removeLife(){
-        //img replacement
-        const liveHeart = 
-        // missed +1
-        //gameOver()
+        let liveHeart = document.querySelector('.tries img');
+        liveHeart.setAttribute('src', 'images/lostHeart.png');
+        liveHeart.className= '';
+        this.missed += 1;
+        if(this.missed === 5 ){
+            this.gameOver();
+        };
     }
     checkForWin(){
-        //check if all letters are shown
+        console.log('check for win called');
+        const chosen = document.querySelectorAll('.show');
+        const space = document.querySelectorAll('.space');
+        if(this.activePhrase.phrase.length === (chosen.length + space.length)){
+            return true;
+        }else{
+            return false;
+        } 
     }
     gameOver(){
-        /* 
-        - show start screen overlay
-        - if won show win
-        - if lost show lost
-        - replace the overlays "start" CSS with
-        win or lose CSS Class
-        */
+        const overlay = document.querySelector('#overlay');
+        const h1 = document.querySelector('#game-over-message');
+        
+        if(this.checkForWin() === true){
+            overlay.style.display = '';
+            h1.textContent = 'WIN';
+            overlay.className = 'win';
+        } else {
+            overlay.style.display = '';
+            h1.textContent = 'LOST';
+            overlay.className = 'lose';
+        }
     }
 }
