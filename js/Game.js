@@ -13,53 +13,61 @@ class Game{
         ];
         this.activePhrase = null;
     }
-    
+    /**
+     * hides overlay
+     * gets randomphrase
+     * calls addPhrasetoDisplay
+     */
     startGame() {
-        //hides start screen overlay
         const overlay = document.querySelector('#overlay');
-        const phraseLi = document.querySelector('#phrase ul');
-        if(phraseLi.hasChildNodes()){
-            overlay.style.display = 'none';
-            for(let i = 0; i < phraseLi.length; i++){
-                phraseLi.removeChild(phraseLi.childNodes[0]);
-            };
-        }else{
-            overlay.style.display = 'none';
-            this.activePhrase = this.getRandomPhrase();
-            this.activePhrase.addPhraseToDisplay();
-        }
+        overlay.style.display = 'none';
+    
+        this.activePhrase = this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
+
     }
 
-    
+    /**
+     * returns a Randomphrase
+     */
     getRandomPhrase() {
         const randomPhrase = Math.floor(Math.random()*this.phrases.length);
         return this.phrases[randomPhrase];
     }
+    /**
+     * 
+     * uses the inserter parameter (key)
+     * to add classes wrong and chosen
+     */
     handleInteraction(key){
             key.disabled = true;
             if (this.activePhrase.checkLetter(key.textContent) == false){
-                key.setAttribute('class','wrong');
+                key.className +=' wrong';
                 this.removeLife();
             } else if ((this.activePhrase.checkLetter(key.textContent))) {
-                key.setAttribute('class','chosen');
+                key.className += ' chosen';
                 this.activePhrase.showMatchedLetter(key.textContent);
                 if(this.checkForWin() === true){
                     this.gameOver();
                 };          
             }
         };
-    
+    /**
+     * remove life and addes 1 to midded property
+     * if missed property is over 5 - call gameOver function
+     */
     removeLife(){
-        let liveHeart = document.querySelector('.tries img');
-        liveHeart.setAttribute('src', 'images/lostHeart.png');
-        liveHeart.className= '';
+        const tries = document.querySelectorAll('.tries');
+        tries[this.missed].firstElementChild.setAttribute('src', 'images/lostHeart.png');
         this.missed += 1;
         if(this.missed === 5 ){
             this.gameOver();
         };
     }
+    /*
+    * Checks if user has won or lost
+    */
     checkForWin(){
-        console.log('check for win called');
         const chosen = document.querySelectorAll('.show');
         const space = document.querySelectorAll('.space');
         if(this.activePhrase.phrase.length === (chosen.length + space.length)){
@@ -68,6 +76,9 @@ class Game{
             return false;
         } 
     }
+    /**
+     * displays start overlay and adds win or lose to screen
+     */
     gameOver(){
         const overlay = document.querySelector('#overlay');
         const h1 = document.querySelector('#game-over-message');
